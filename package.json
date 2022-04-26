@@ -1,0 +1,29 @@
+{
+  "name": "giggle",
+  "version": "0.0.1",
+  "description": "a fast json to html library",
+  "main": "index.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sebkolind/giggle.git"
+  },
+  "author": "Sebastian L. K. Sørensen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sebkolind/giggle/issues"
+  },
+  "homepage": "https://github.com/sebkolind/giggle#readme",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.21.0",
+    "@typescript-eslint/parser": "^5.21.0",
+    "eslint": "^8.14.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.2.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "typescript": "^4.6.3"
+  }
+}
