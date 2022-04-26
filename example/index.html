@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>giggle</title>
 </head>
+
 <body>
   <script src="../build/index.js"></script>
   <script>
@@ -19,14 +21,15 @@
             elements: [
               {
                 type: 'img',
-                options: {
+                attributes: {
                   src: 'https://via.placeholder.com/150x150'
-                }
+                },
+                options: {}
               },
               {
-                type: 'text',
+                type: 'span',
                 options: {
-                  content: 'Hi! This is another text.'
+                  textContent: 'Hi! This is another text.'
                 }
               }
             ]
@@ -34,15 +37,16 @@
         },
         {
           type: 'img',
-          options: {
+          options: {},
+          attributes: {
             src: 'https://via.placeholder.com/150x150'
-          }
+          },
         },
         {
-          type: 'text',
+          type: 'span',
           class: ['class1', 'class2'],
           options: {
-            content: 'Hello, this is some cool text.'
+            textContent: 'Hello, this is some cool text.'
           }
         }
       ]
@@ -53,4 +57,5 @@
     els.forEach(el => document.body.append(el))
   </script>
 </body>
+
 </html>

@@ -3,74 +3,68 @@ type Component = {
   type: string;
   id?: string;
   class?: string[];
-  options: UnknownRecord
+  options?: UnknownRecord
+  attributes?: Record<string, string>;
 }
 type Source = {
   elements: Component[]
 }
+type IndexableElement = Element & {
+  [key: string]: unknown;
+} | HTMLElement & {
+  [key: string]: unknown;
+}
 
-const giggle = (source: Source): Element[] => {
-  let el: Element
-  const els: Element[] = []
-
+const giggle = (source: Source): IndexableElement[] => {
   if (source.elements == null) {
     throw new Error('`elements` at the root is required.')
   }
 
-  source.elements.forEach(c => {
-    switch (c.type) {
-      case 'div':
-        el = createElement('div', c)
-        if (c.options.elements != null) {
-          appendChildren(el, c)
-        }
-        break
-
-      case 'img':
-        el = createElement('img', c)
-        if (c.options.src == null) {
-          throw new Error(`Element (#${el.id}) requires "src" in options`)
-        }
-        el.setAttribute('src', c.options.src as string)
-        break
-
-      case 'text':
-        el = createElement('span', c)
-        if (c.options.content == null) {
-          console.info(`Element (#${el.id}) does not have "content" in options. Defaulting to empty string.`)
-        }
-        el.textContent = c.options.content as string || ''
-        break
-
-      default:
-        throw new Error(`Component of type "${c.type}" is not supported`)
-    }
-
-    els.push(el)
-  })
-
-  return els
+  return source.elements.map(e => createElement(e.type, e))
 }
 
-const appendChildren = (el: Element, c: Component): void => {
-  giggle(c.options as Source).forEach(ch => el.appendChild(ch))
+const appendChildren = (el: IndexableElement, c: Component): void => {
+  if (c.options?.elements != null) {
+    giggle(c.options as Source).forEach(ch => el.appendChild(ch))
+  }
 }
 
-const createElement = (tag: string, c: Component): Element => {
-  const el = document.createElement(tag)
+const createElement = (tag: string, c: Component): IndexableElement => {
+  const el = document.createElement(tag) as IndexableElement
 
   attachId(el, c)
   attachClasses(el, c)
+  attachAttributes(el, c)
+  appendChildren(el, c)
+  attachOptions(el, c)
 
   return el
 }
 
-const attachClasses = (el: Element, c: Component): void => {
+const attachOptions = (el: IndexableElement, c: Component): void => {
+  if (c.options != null) {
+    Object.keys(c.options).forEach(o => {
+      el[o] = c.options?.[o]
+    })
+  }
+}
+
+const attachAttributes = (el: IndexableElement, c: Component): void => {
+  if (c.attributes != null) {
+    Object.keys(c.attributes).forEach(a => {
+      if (c.attributes?.[a] != null) {
+        el.setAttribute(a, c.attributes[a])
+      }
+    })
+  }
+}
+
+const attachClasses = (el: IndexableElement, c: Component): void => {
   if (c.class != null) {
     c.class.forEach(cl => el.classList.add(cl))
   }
 }
 
-const attachId = (el: Element, c: Component): void => {
+const attachId = (el: IndexableElement, c: Component): void => {
   el.id = c.id || `${c.type}-${Math.random().toString(16).substring(2, 8)}`
 }
