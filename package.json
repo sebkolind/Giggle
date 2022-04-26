@@ -4,7 +4,8 @@
   "description": "a fast json to html library",
   "main": "index.ts",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "dev": "tsc --watch"
   },
   "repository": {
     "type": "git",
