@@ -29,7 +29,24 @@
               type: 'span',
               options: {
                 textContent: 'Hi! This is another text.'
-              }
+              },
+              elements: [
+                {
+                  type: 'span',
+                  options: {
+                    textContent: 'Hi! This is another text inside of the text.'
+                  }
+                },
+                {
+                  type: 'p',
+                  attributes: {
+                    title: 'A title attr on a paragraph'
+                  },
+                  options: {
+                    textContent: 'This is a paragraph'
+                  }
+                }
+              ]
             }
           ],
           options: {}
