@@ -1,18 +1,16 @@
 type UnknownRecord = Record<string, unknown>
-type Component = {
-  type: string;
-  id?: string;
-  class?: string[];
-  options?: UnknownRecord
-  attributes?: Record<string, string>;
-}
 type Source = {
-  elements: Component[]
+  type: string
+  id?: string
+  class?: string[]
+  elements?: Source[]
+  options?: UnknownRecord
+  attributes?: Record<string, string>
 }
 type IndexableElement = Element & {
-  [key: string]: unknown;
+  [key: string]: unknown
 } | HTMLElement & {
-  [key: string]: unknown;
+  [key: string]: unknown
 }
 
 const giggle = (source: Source): IndexableElement[] => {
@@ -23,48 +21,51 @@ const giggle = (source: Source): IndexableElement[] => {
   return source.elements.map(e => createElement(e.type, e))
 }
 
-const appendChildren = (el: IndexableElement, c: Component): void => {
-  if (c.options?.elements != null) {
-    giggle(c.options as Source).forEach(ch => el.appendChild(ch))
-  }
-}
-
-const createElement = (tag: string, c: Component): IndexableElement => {
+const createElement = (tag: string, s: Source): IndexableElement => {
   const el = document.createElement(tag) as IndexableElement
 
-  attachId(el, c)
-  attachClasses(el, c)
-  attachAttributes(el, c)
-  appendChildren(el, c)
-  attachOptions(el, c)
+  attachId(el, s)
+  attachClasses(el, s)
+  attachAttributes(el, s)
+  attachOptions(el, s)
+
+  appendChildren(el, s)
 
   return el
 }
 
-const attachOptions = (el: IndexableElement, c: Component): void => {
-  if (c.options != null) {
-    Object.keys(c.options).forEach(o => {
-      el[o] = c.options?.[o]
-    })
+const appendChildren = (el: IndexableElement, s: Source): void => {
+  if (s.elements != null) {
+    giggle(s).forEach(ch => el.appendChild(ch))
   }
 }
 
-const attachAttributes = (el: IndexableElement, c: Component): void => {
-  if (c.attributes != null) {
-    Object.keys(c.attributes).forEach(a => {
-      if (c.attributes?.[a] != null) {
-        el.setAttribute(a, c.attributes[a])
+const attachOptions = (el: IndexableElement, s: Source): void => {
+  if (s.options != null) {
+    Object.keys(s.options).forEach(o => {
+      if (el[o] != null) {
+        el[o] = s.options?.[o]
       }
     })
   }
 }
 
-const attachClasses = (el: IndexableElement, c: Component): void => {
-  if (c.class != null) {
-    c.class.forEach(cl => el.classList.add(cl))
+const attachAttributes = (el: IndexableElement, s: Source): void => {
+  if (s.attributes != null) {
+    Object.keys(s.attributes).forEach(a => {
+      if (s.attributes?.[a] != null) {
+        el.setAttribute(a, s.attributes[a])
+      }
+    })
   }
 }
 
-const attachId = (el: IndexableElement, c: Component): void => {
-  el.id = c.id || `${c.type}-${Math.random().toString(16).substring(2, 8)}`
+const attachClasses = (el: IndexableElement, s: Source): void => {
+  if (s.class != null) {
+    s.class.forEach(cl => el.classList.add(cl))
+  }
+}
+
+const attachId = (el: IndexableElement, s: Source): void => {
+  el.id = s.id || `${s.type}-${Math.random().toString(16).substring(2, 8)}`
 }
