@@ -9,22 +9,6 @@ type Source = {
   elements: Component[]
 }
 
-const createElement = (tag: string, c: Component): Element => {
-  const el = document.createElement(tag)
-
-  el.id = c.id || `${c.type}-${Math.random().toString(16).substring(2, 8)}`
-
-  if (c.class != null) {
-    c.class.forEach(cl => el.classList.add(cl))
-  }
-
-  return el
-}
-
-const appendChildren = (el: Element, c: Component): void => {
-  giggle(c.options as Source).forEach(ch => el.appendChild(ch))
-}
-
 const giggle = (source: Source): Element[] => {
   let el: Element
   const els: Element[] = []
@@ -66,4 +50,27 @@ const giggle = (source: Source): Element[] => {
   })
 
   return els
+}
+
+const appendChildren = (el: Element, c: Component): void => {
+  giggle(c.options as Source).forEach(ch => el.appendChild(ch))
+}
+
+const createElement = (tag: string, c: Component): Element => {
+  const el = document.createElement(tag)
+
+  attachId(el, c)
+  attachClasses(el, c)
+
+  return el
+}
+
+const attachClasses = (el: Element, c: Component): void => {
+  if (c.class != null) {
+    c.class.forEach(cl => el.classList.add(cl))
+  }
+}
+
+const attachId = (el: Element, c: Component): void => {
+  el.id = c.id || `${c.type}-${Math.random().toString(16).substring(2, 8)}`
 }
