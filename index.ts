@@ -35,35 +35,47 @@ const createElement = (tag: string, s: Source): IndexableElement => {
 }
 
 const appendChildren = (el: IndexableElement, s: Source): void => {
-  if (s.elements != null) {
-    giggle(s).forEach(ch => el.appendChild(ch))
+  if (s.elements == null) {
+    return
   }
+
+  giggle(s).forEach(ch => el.appendChild(ch))
 }
 
 const attachOptions = (el: IndexableElement, s: Source): void => {
-  if (s.options != null) {
-    Object.keys(s.options).forEach(o => {
-      if (el[o] != null) {
-        el[o] = s.options?.[o]
-      }
-    })
+  if (s.options == null) {
+    return
   }
+
+  Object.keys(s.options).forEach(o => {
+    if (el[o] == null) {
+      return
+    }
+
+    el[o] = s.options?.[o]
+  })
 }
 
 const attachAttributes = (el: IndexableElement, s: Source): void => {
-  if (s.attributes != null) {
-    Object.keys(s.attributes).forEach(a => {
-      if (s.attributes?.[a] != null) {
-        el.setAttribute(a, s.attributes[a])
-      }
-    })
+  if (s.attributes == null) {
+    return
   }
+
+  Object.keys(s.attributes).forEach(a => {
+    if (s.attributes?.[a] == null) {
+      return
+    }
+
+    el.setAttribute(a, s.attributes[a])
+  })
 }
 
 const attachClasses = (el: IndexableElement, s: Source): void => {
-  if (s.class != null) {
-    s.class.forEach(cl => el.classList.add(cl))
+  if (s.class == null) {
+    return
   }
+
+  s.class.forEach(cl => el.classList.add(cl))
 }
 
 const attachId = (el: IndexableElement, s: Source): void => {
