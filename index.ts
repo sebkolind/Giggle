@@ -52,6 +52,9 @@ const giggle = (source: Source): Element[] => {
 
       case 'text':
         el = createElement('span', c)
+        if (c.options.content == null) {
+          console.info(`Element (#${el.id}) does not have "content" in options. Defaulting to empty string.`)
+        }
         el.textContent = c.options.content as string || ''
         break
 
