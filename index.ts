@@ -4,7 +4,7 @@ type Source = {
   id?: string
   class?: string[]
   elements?: Source[]
-  options?: UnknownRecord
+  properties?: UnknownRecord
   attributes?: Record<string, string>
 }
 type IndexableElement = Element & {
@@ -27,7 +27,7 @@ const createElement = (tag: string, s: Source): IndexableElement => {
   attachId(el, s)
   attachClasses(el, s)
   attachAttributes(el, s)
-  attachOptions(el, s)
+  attachProperties(el, s)
 
   appendChildren(el, s)
 
@@ -42,17 +42,17 @@ const appendChildren = (el: IndexableElement, s: Source): void => {
   giggle(s).forEach(so => el.appendChild(so))
 }
 
-const attachOptions = (el: IndexableElement, s: Source): void => {
-  if (s.options == null) {
+const attachProperties = (el: IndexableElement, s: Source): void => {
+  if (s.properties == null) {
     return
   }
 
-  Object.keys(s.options).forEach(o => {
-    if (el[o] == null) {
+  Object.keys(s.properties).forEach(p => {
+    if (el[p] == null) {
       return
     }
 
-    el[o] = s.options?.[o]
+    el[p] = s.properties?.[p]
   })
 }
 
