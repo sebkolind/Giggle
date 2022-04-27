@@ -68,9 +68,9 @@
       ]
     }
 
-    const els = giggle(sample)
-
-    els.forEach(el => document.body.append(el))
+    giggle(sample, {
+      appendTo: document.body,
+    })
   </script>
 </body>
 

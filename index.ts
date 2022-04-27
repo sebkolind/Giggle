@@ -1,4 +1,7 @@
 type UnknownRecord = Record<string, unknown>
+type Options = {
+  appendTo?: Element
+}
 type Source = {
   type: string
   id?: string
@@ -13,12 +16,18 @@ type IndexableElement = Element & {
   [key: string]: unknown
 }
 
-const giggle = (source: Source): IndexableElement[] => {
+const giggle = (source: Source, options?: Options): IndexableElement[] => {
   if (source.elements == null) {
     throw new Error('`elements` at the root is required.')
   }
 
-  return source.elements.map(e => createElement(e.type, e))
+  const elements = source.elements.map(el => createElement(el.type, el))
+
+  if (options?.appendTo != null) {
+    elements.forEach(el => options.appendTo?.appendChild(el))
+  }
+
+  return elements
 }
 
 const createElement = (tag: string, s: Source): IndexableElement => {
