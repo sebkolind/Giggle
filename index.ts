@@ -15,6 +15,10 @@ type IndexableElement = Element & {
 } | HTMLElement & {
   [key: string]: unknown
 }
+type Context = {
+  el: IndexableElement
+  source: Source
+}
 
 const giggle = (source: Source, options?: Options): IndexableElement[] => {
   if (source.elements == null) {
@@ -30,63 +34,64 @@ const giggle = (source: Source, options?: Options): IndexableElement[] => {
   return elements
 }
 
-const createElement = (tag: string, s: Source): IndexableElement => {
+const createElement = (tag: string, source: Source): IndexableElement => {
   const el = document.createElement(tag) as IndexableElement
+  const context = { el, source }
 
-  attachId(el, s)
-  attachClasses(el, s)
-  attachAttributes(el, s)
-  attachProperties(el, s)
+  attachId(context)
+  attachClasses(context)
+  attachAttributes(context)
+  attachProperties(context)
 
-  appendChildren(el, s)
+  appendChildren(context)
 
   return el
 }
 
-const appendChildren = (el: IndexableElement, s: Source): void => {
-  if (s.elements == null) {
+const appendChildren = (context: Context): void => {
+  if (context.source.elements == null) {
     return
   }
 
-  giggle(s).forEach(so => el.appendChild(so))
+  giggle(context.source).forEach(so => context.el.appendChild(so))
 }
 
-const attachProperties = (el: IndexableElement, s: Source): void => {
-  if (s.properties == null) {
+const attachProperties = (context: Context): void => {
+  if (context.source.properties == null) {
     return
   }
 
-  Object.keys(s.properties).forEach(p => {
-    if (el[p] == null) {
+  Object.keys(context.source.properties).forEach(p => {
+    if (context.el[p] == null) {
       return
     }
 
-    el[p] = s.properties?.[p]
+    context.el[p] = context.source.properties?.[p]
   })
 }
 
-const attachAttributes = (el: IndexableElement, s: Source): void => {
-  if (s.attributes == null) {
+const attachAttributes = (context: Context): void => {
+  if (context.source.attributes == null) {
     return
   }
 
-  Object.keys(s.attributes).forEach(a => {
-    if (s.attributes?.[a] == null) {
+  Object.keys(context.source.attributes).forEach(a => {
+    if (context.source.attributes?.[a] == null) {
       return
     }
 
-    el.setAttribute(a, s.attributes[a])
+    context.el.setAttribute(a, context.source.attributes[a])
   })
 }
 
-const attachClasses = (el: IndexableElement, s: Source): void => {
-  if (s.class == null) {
+const attachClasses = (context: Context): void => {
+  if (context.source.class == null) {
     return
   }
 
-  s.class.forEach(cl => el.classList.add(cl))
+  context.source.class.forEach(cl => context.el.classList.add(cl))
 }
 
-const attachId = (el: IndexableElement, s: Source): void => {
-  el.id = s.id || `${s.type}-${Math.random().toString(16).substring(2, 8)}`
+const attachId = (context: Context): void => {
+  context.el.id = context.source.id || `${context.source.type}-${Math.random().toString(16).substring(2, 8)}`
 }
