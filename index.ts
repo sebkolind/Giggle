@@ -39,7 +39,7 @@ const appendChildren = (el: IndexableElement, s: Source): void => {
     return
   }
 
-  giggle(s).forEach(ch => el.appendChild(ch))
+  giggle(s).forEach(so => el.appendChild(so))
 }
 
 const attachOptions = (el: IndexableElement, s: Source): void => {
