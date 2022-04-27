@@ -1,0 +1,14 @@
+{
+  "name": "giggle-example",
+  "version": "0.0.1",
+  "description": "",
+  "source": "index.html",
+  "scripts": {
+      "start": "parcel"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "parcel": "^2.5.0"
+  }
+}

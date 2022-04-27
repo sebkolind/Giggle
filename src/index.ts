@@ -20,7 +20,7 @@ type Context = {
   source: Source
 }
 
-const giggle = (source: Source, options?: Options): IndexableElement[] => {
+export const giggle = (source: Source, options?: Options): IndexableElement[] => {
   if (source.elements == null) {
     throw new Error('`elements` at the root is required.')
   }
