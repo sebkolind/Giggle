@@ -10,6 +10,8 @@ Being able to generate a full web page from json is super powerful. The benefit 
 
 Giggle is built with a mindset of being part of a composition based structure. Meaning that in it self it might not give a lot of value in the modern era, but together with other tools it is very powerful.
 
+## Friends
+
 I will be building other tools that can be used together with Giggle:
 
 - A low-key reactivity JS library
