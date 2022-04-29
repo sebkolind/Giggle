@@ -1,4 +1,4 @@
-import { giggle } from 'giggle'
+import { giggle } from '@sebkolind/giggle'
 
 const sample = {
   elements: [

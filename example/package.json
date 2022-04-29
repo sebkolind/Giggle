@@ -4,11 +4,14 @@
   "description": "",
   "source": "index.html",
   "scripts": {
-      "start": "parcel"
+    "start": "parcel"
   },
   "author": "",
   "license": "MIT",
   "devDependencies": {
     "parcel": "^2.5.0"
+  },
+  "dependencies": {
+    "@sebkolind/giggle": "^0.0.2"
   }
 }
