@@ -3,7 +3,7 @@ type Options = {
   appendTo?: Element
 }
 type Source = {
-  type: string
+  tag: string
   id?: string
   class?: string[]
   elements?: Source[]
@@ -19,13 +19,14 @@ type Context = {
   el: IndexableElement
   source: Source
 }
+type Giggle = Pick<Source, 'elements'>;
 
-export const giggle = (source: Source, options?: Options): IndexableElement[] => {
+export const giggle = (source: Giggle, options?: Options): IndexableElement[] => {
   if (source.elements == null) {
     throw new Error('`elements` at the root is required.')
   }
 
-  const elements = source.elements.map(el => createElement(el.type, el))
+  const elements = source.elements.map(el => createElement(el.tag, el))
 
   if (options?.appendTo != null) {
     elements.forEach(el => options.appendTo?.appendChild(el))
@@ -93,5 +94,5 @@ const attachClasses = (context: Context): void => {
 }
 
 const attachId = (context: Context): void => {
-  context.el.id = context.source.id || `${context.source.type}-${Math.random().toString(16).substring(2, 8)}`
+  context.el.id = context.source.id || `${context.source.tag}-${Math.random().toString(16).substring(2, 8)}`
 }

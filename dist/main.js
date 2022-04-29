@@ -5,7 +5,7 @@ function $parcel$export(e, n, v, s) {
 $parcel$export(module.exports, "giggle", () => $882b6d93070905b3$export$c21608a571ae8bca);
 const $882b6d93070905b3$export$c21608a571ae8bca = (source, options)=>{
     if (source.elements == null) throw new Error('`elements` at the root is required.');
-    const elements = source.elements.map((el)=>$882b6d93070905b3$var$createElement(el.type, el)
+    const elements = source.elements.map((el)=>$882b6d93070905b3$var$createElement(el.tag, el)
     );
     if (options?.appendTo != null) elements.forEach((el)=>options.appendTo?.appendChild(el)
     );
@@ -49,7 +49,7 @@ const $882b6d93070905b3$var$attachClasses = (context)=>{
     );
 };
 const $882b6d93070905b3$var$attachId = (context)=>{
-    context.el.id = context.source.id || `${context.source.type}-${Math.random().toString(16).substring(2, 8)}`;
+    context.el.id = context.source.id || `${context.source.tag}-${Math.random().toString(16).substring(2, 8)}`;
 };
 
 

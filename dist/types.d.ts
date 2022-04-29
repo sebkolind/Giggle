@@ -3,7 +3,7 @@ type Options = {
     appendTo?: Element;
 };
 type Source = {
-    type: string;
+    tag: string;
     id?: string;
     class?: string[];
     elements?: Source[];
@@ -15,6 +15,7 @@ type IndexableElement = (Element & {
 }) | (HTMLElement & {
     [key: string]: unknown;
 });
-export const giggle: (source: Source, options?: Options | undefined) => IndexableElement[];
+type Giggle = Pick<Source, 'elements'>;
+export const giggle: (source: Giggle, options?: Options | undefined) => IndexableElement[];
 
 //# sourceMappingURL=types.d.ts.map
