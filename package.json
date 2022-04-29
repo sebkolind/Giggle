@@ -1,6 +1,6 @@
 {
   "name": "@sebkolind/giggle",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A json to html library",
   "source": "src/index.ts",
   "main": "dist/main.js",
