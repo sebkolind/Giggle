@@ -14,5 +14,5 @@ Giggle is built with a mindset of being part of a composition based structure. M
 
 I will be building other tools that can be used together with Giggle:
 
-- A low-key reactivity JS library
+- [A low-key reactivity JS library](https://github.com/sebkolind/praxy)
 - A simple editor to edit json files used with Giggle
