@@ -3,45 +3,45 @@ import { giggle } from '@sebkolind/giggle'
 const sample = {
   elements: [
     {
-      type: 'div',
+      tag: 'div',
       elements: [
         {
-          type: 'ul',
+          tag: 'ul',
           elements: [
-            { type: 'li', properties: { textContent: 'List item 1' } },
-            { type: 'li', properties: { textContent: 'List item 2' } },
-            { type: 'li', properties: { textContent: 'List item 3' } },
-            { type: 'li', properties: { textContent: 'List item 4' } }
+            { tag: 'li', properties: { textContent: 'List item 1' } },
+            { tag: 'li', properties: { textContent: 'List item 2' } },
+            { tag: 'li', properties: { textContent: 'List item 3' } },
+            { tag: 'li', properties: { textContent: 'List item 4' } }
           ]
         }
       ]
     },
     {
-      type: 'div',
+      tag: 'div',
       id: 'some-div',
       class: ['class1', 'class2'],
       elements: [
         {
-          type: 'img',
+          tag: 'img',
           attributes: {
             src: 'https://via.placeholder.com/150x150'
           },
           properties: {}
         },
         {
-          type: 'span',
+          tag: 'span',
           properties: {
             textContent: 'Hi! This is another text.'
           },
           elements: [
             {
-              type: 'span',
+              tag: 'span',
               properties: {
                 textContent: 'Hi! This is another text inside of the text.'
               }
             },
             {
-              type: 'p',
+              tag: 'p',
               attributes: {
                 title: 'A title attr on a paragraph'
               },
@@ -55,14 +55,14 @@ const sample = {
       properties: {}
     },
     {
-      type: 'img',
+      tag: 'img',
       properties: {},
       attributes: {
         src: 'https://via.placeholder.com/150x150'
       }
     },
     {
-      type: 'span',
+      tag: 'span',
       class: ['class1', 'class2'],
       properties: {
         textContent: 'Hello, this is some cool text.'
