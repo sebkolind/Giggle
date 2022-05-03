@@ -24,6 +24,9 @@ I will be building other tools that can be used together with Giggle:
 Sometimes it's required to fetch data from an endpoint and populate some input fields with the response. It would be input elements like: select, radio, checkboxes or even text fields.
 
 **JSON Structure**
+
+In this proposal `target` is where to place the data, and `value` will be where to get the data in the JSON response.
+
 ```json
 {
   "elements": [
@@ -35,8 +38,6 @@ Sometimes it's required to fetch data from an endpoint and populate some input f
       "values": {
         "url": "https://xxx.com/api/v1/data",
         "map": [
-          // "target" being where to place the data
-          // "value" being where to get the data in the JSON response
           {"target": "value", "value": "key"},
           {"target": "textContent", "value": "value"}
         ]
