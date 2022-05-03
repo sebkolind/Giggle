@@ -16,3 +16,50 @@ I will be building other tools that can be used together with Giggle:
 
 - [A low-key reactivity JS library](https://github.com/sebkolind/praxy)
 - A simple editor to edit json files used with Giggle
+
+## Roadmap & ideas
+
+### Async data
+
+Sometimes it's required to fetch data from an endpoint and populate some input fields with the response. It would be input elements like: select, radio, checkboxes or even text fields.
+
+```json
+// JSON structure
+{
+  "elements": [
+    {
+      "tag": "select",
+      "attributes": {
+        "name": "select-1"
+      }
+      "values": {
+        "url": "https://xxx.com/api/v1/data",
+        "map": [
+          // "target" being where to place the data
+          // "value" being where to get the data in the JSON response
+          {"target": "value", "value": "key"},
+          {"target": "textContent", "value": "value"}
+        ]
+      }
+    }
+  ]
+}
+```
+
+```json
+// API response
+[
+  {"key": "option-1", "value": "Option 1"},
+  {"key": "option-2", "value": "Option 2"},
+  {"key": "option-3", "value": "Option 3"},
+]
+```
+
+```html
+<!-- HTML output -->
+<select name="select-1">
+  <option value="option-1">Option 1</option>
+  <option value="option-2">Option 2</option>
+  <option value="option-3">Option 3</option>
+</select>
+```
