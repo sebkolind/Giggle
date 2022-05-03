@@ -23,8 +23,8 @@ I will be building other tools that can be used together with Giggle:
 
 Sometimes it's required to fetch data from an endpoint and populate some input fields with the response. It would be input elements like: select, radio, checkboxes or even text fields.
 
+**JSON Structure**
 ```json
-// JSON structure
 {
   "elements": [
     {
@@ -46,8 +46,8 @@ Sometimes it's required to fetch data from an endpoint and populate some input f
 }
 ```
 
+**API response**
 ```json
-// API response
 [
   {"key": "option-1", "value": "Option 1"},
   {"key": "option-2", "value": "Option 2"},
@@ -55,8 +55,8 @@ Sometimes it's required to fetch data from an endpoint and populate some input f
 ]
 ```
 
+**HTML output**
 ```html
-<!-- HTML output -->
 <select name="select-1">
   <option value="option-1">Option 1</option>
   <option value="option-2">Option 2</option>
