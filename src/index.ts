@@ -1,11 +1,11 @@
 import { Giggle, Options, IndexableElement, Source, Context } from './types'
 
-export const giggle = (source: Giggle, options?: Options): IndexableElement[] => {
+export const giggle = async (source: Giggle, options?: Options): Promise<IndexableElement[]> => {
   if (source.elements == null) {
     throw new Error('`elements` at the root is required.')
   }
 
-  const elements = source.elements.map(el => createElement(el.tag, el))
+  const elements = await Promise.all(source.elements.map(el => createElement(el.tag, el)))
 
   if (options?.appendTo != null) {
     elements.forEach(el => options.appendTo?.appendChild(el))
@@ -14,26 +14,81 @@ export const giggle = (source: Giggle, options?: Options): IndexableElement[] =>
   return elements
 }
 
-const createElement = (tag: string, source: Source): IndexableElement => {
+const createElement = async (tag: string, source: Source): Promise<IndexableElement> => {
   const el = document.createElement(tag) as IndexableElement
-  const context = { el, source }
+  const context: Context = { el, source }
 
   attachId(context)
   attachClasses(context)
   attachAttributes(context)
   attachProperties(context)
+  await attachValues(context)
 
   appendChildren(context)
 
   return el
 }
 
-const appendChildren = (context: Context): void => {
+const attachValues = async (context: Context): Promise<void> => {
+  if (context.source.values == null || context.source.values?.url == null || context.source.values.pool != null) {
+    return
+  }
+
+  const response = await fetch(context.source.values.url)
+
+  if (!response.ok) {
+    throw new Error(`Couldn't fetch ${context.source.values.url}`)
+  }
+
+  context.source.values.pool = await response.json()
+
+  const [key, value] = context.source.values.map.split(',').map(x => x.trim())
+
+  switch (context.source.values.tag) {
+    case 'option':
+      context.source.elements = context.source.values.pool?.map(p => {
+        return {
+          // FIXME: Tag is required, why does it complain?
+          tag: context.source.values!.tag,
+          attributes: { value: p[key] },
+          properties: { textContent: p[value] }
+        }
+      })
+      break
+
+    case 'radio':
+      context.source.elements = context.source.values.pool?.map(p => {
+        return {
+          tag: 'label',
+          elements: [
+            {
+              tag: 'span',
+              properties: { textContent: p[value] }
+            },
+            {
+              tag: 'input',
+              attributes: { value: p[key] },
+              properties: { type: 'radio' }
+            }
+          ]
+        }
+      })
+      break
+
+    default:
+      console.error(`The tag "${context.source.values.tag}" is not supported for "values".`)
+      break
+  }
+}
+
+const appendChildren = async (context: Context): Promise<void> => {
   if (context.source.elements == null) {
     return
   }
 
-  giggle(context.source).forEach(so => context.el.appendChild(so))
+  const els = await giggle(context.source)
+
+  els.forEach(so => context.el.appendChild(so))
 }
 
 const attachProperties = (context: Context): void => {
@@ -42,10 +97,6 @@ const attachProperties = (context: Context): void => {
   }
 
   Object.keys(context.source.properties).forEach(p => {
-    if (context.el[p] == null) {
-      return
-    }
-
     context.el[p] = context.source.properties?.[p]
   })
 }

@@ -4,6 +4,11 @@ export type Options = {
   appendTo?: Element
 }
 
+export type ValuesMap = {
+  target: string
+  value: string
+}
+
 export type Source = {
   tag: string
   id?: string
@@ -11,6 +16,12 @@ export type Source = {
   elements?: Source[]
   properties?: UnknownRecord
   attributes?: Record<string, string>
+  values?: {
+    url: string
+    map: string
+    tag: string
+    pool?: Record<string, string>[]
+  }
 }
 
 export type IndexableElement = Element & {

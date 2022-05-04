@@ -12,6 +12,6 @@
     "parcel": "^2.5.0"
   },
   "dependencies": {
-    "@sebkolind/giggle": "^0.0.2"
+    "@sebkolind/giggle": "file:.."
   }
 }

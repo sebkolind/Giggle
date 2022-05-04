@@ -4,6 +4,15 @@ const sample = {
   elements: [
     {
       tag: 'div',
+      id: 'select-async-data',
+      values: {
+        tag: 'radio',
+        url: 'https://jsonplaceholder.typicode.com/albums',
+        map: 'id, title'
+      }
+    },
+    {
+      tag: 'div',
       elements: [
         {
           tag: 'ul',
@@ -42,6 +51,7 @@ const sample = {
             },
             {
               tag: 'p',
+              elements: [],
               attributes: {
                 title: 'A title attr on a paragraph'
               },
